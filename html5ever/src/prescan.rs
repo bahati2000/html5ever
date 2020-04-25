@@ -1,20 +1,29 @@
 
-pub fn readByte(stream: &[u8]) {
+enum AbortReason
+{
+  not enough bytes,
+  no encoding detected within the first 1024 bytes
+}
+pub fn readByte(stream: vec!&[u8]) -> Result<&'static Encoding, AbortReason>{
   let &mut position = stream[0];
 
-  for i in 0..stream.len()-1 {
-    if stream[0..3] == [0x3C, 0x21, 0x2D, 0x3C] AND stream[-3]==0x2D AND stream[-2]==0x2D AND stream[-1]==0x3C 
-    {
-      position = stream[-1];
-    }
-    if stream[0..1]==[0x3C, 0x4D] OR stream[0..1]==[0x6D, 0x45] OR stream[0..1]==[0x65, 0x54] OR stream[0..1]==[0x74, 0x41] OR stream[0..1]==[0x61,0x2F]
-    {
-      position = stream[1];
-      let mut attribute_list = vec![];
-      let mut got_pragma = false;
-      let mut need_pragma = charset; // Not sure about this.
-      
-      // Sutck on the HTML.Spec - Prescan a byte stream, Step 2-6: Attributes
+
+  for i in 0..stream.iter() {
+
+    match stream {
+      [0x3C, 0x21, 0x2D, 0x3C, .., 0x2D, 0x2D, 0x3C] => {
+        //Adding position
+        pub fn for_label(label: &[u8]) -> Option<&'static Encoding>{
+
+        }
+      },
+      [0x3C, 0x4D | 0x6D, 0x45 | 0x65, 0x54 | 0x74, 0x41 | 0x61 ,0x20] => {
+        // will include another Match here for attribute
+        pub fn for_label(label: &[u8]) -> Option<&'static Encoding>{
+
+        }
+      }
+      // implementing the AbortReason
     }
   }
 
